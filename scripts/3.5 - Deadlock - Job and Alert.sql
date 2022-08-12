@@ -121,7 +121,7 @@ BEGIN
 	CREATE EVENT SESSION [capture_deadlocks] ON SERVER 
 	ADD EVENT sqlserver.xml_deadlock_report( ACTION(sqlserver.database_name) ) 
 	ADD TARGET package0.asynchronous_file_target(
-	  SET filename = 'C:\Temp\Video Alertas\capture_deadlocks.xel',
+	  SET filename = '/tmp/db/video_alertas/capture_deadlocks.xel',
 		  max_file_size = 500,
 		  max_rollover_files = 5)
 	WITH (
@@ -143,7 +143,7 @@ GO
 CREATE EVENT SESSION [capture_deadlocks] ON SERVER 
 ADD EVENT sqlserver.xml_deadlock_report( ACTION(sqlserver.database_name) ) 
 ADD TARGET package0.asynchronous_file_target(
-	SET filename = 'C:\Temp\Video Alertas\capture_deadlocks.xel',
+	SET filename = '/tmp/db/video_alertas/capture_deadlocks.xel',
 		max_file_size = 500,
 		max_rollover_files = 5)
 WITH (

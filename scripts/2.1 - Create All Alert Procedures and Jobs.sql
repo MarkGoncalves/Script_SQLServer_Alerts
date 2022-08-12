@@ -5140,8 +5140,9 @@ BEGIN
 		RETURN
 
 	DECLARE @Ds_Arquivo_Trace VARCHAR(500) = (SELECT [path] FROM sys.traces WHERE is_default = 1);
-	DECLARE @Index INT = PATINDEX('%\%', REVERSE(@Ds_Arquivo_Trace));
-	DECLARE @Nm_Arquivo_Trace VARCHAR(500) = LEFT(@Ds_Arquivo_Trace, LEN(@Ds_Arquivo_Trace) - @Index) + '\log.trc';
+	DECLARE @Index INT = PATINDEX('%/%', REVERSE(@Ds_Arquivo_Trace));
+	DECLARE @Nm_Arquivo_Trace VARCHAR(500) = LEFT(@Ds_Arquivo_Trace, LEN(@Ds_Arquivo_Trace) - @Index) + '/log.trc';
+	--select @Nm_Arquivo_Trace
 
 	DECLARE @Dt_Referencia DATETIME = DATEADD(HOUR, @Vl_Parameter_2*-1, GETDATE())
 

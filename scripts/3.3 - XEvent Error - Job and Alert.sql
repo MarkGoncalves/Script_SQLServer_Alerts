@@ -82,8 +82,8 @@ BEGIN
 			GETDATE() as [Dt_Error]
 		into #events_cte
 		from sys.fn_xe_file_target_read_file
-			('C:\Temp\Video Alertas\what_queries_are_failing*.xel',
-			'C:\Temp\Video Alertas\what_queries_are_failing*.xem',
+			('/tmp/db/video_alertas/what_queries_are_failing*.xel',
+			'/tmp/db/video_alertas/what_queries_are_failing*.xem',
 			null, null)
 		cross apply (select CAST(event_data as XML) as event_data) as xevents
 
@@ -111,8 +111,8 @@ BEGIN
 	WHERE ([severity]> 12)
 	)
 	ADD TARGET package0.asynchronous_file_target
-	(set filename = 'C:\Temp\Video Alertas\what_queries_are_failing.xel' ,
-	metadatafile = 'C:\Temp\Video Alertas\what_queries_are_failing.xem',
+	(set filename = '/tmp/db/video_alertas/what_queries_are_failing.xel' ,
+	metadatafile = '/tmp/db/video_alertas/what_queries_are_failing.xem',
 	max_file_size = 500,
 	max_rollover_files = 5)
 	WITH (MAX_DISPATCH_LATENCY = 5SECONDS)
@@ -217,8 +217,8 @@ ACTION (sqlserver.client_hostname,sqlserver.sql_text, sqlserver.tsql_stack, sqls
 WHERE ([severity]> 12)
 )
 ADD TARGET package0.asynchronous_file_target
-(set filename = 'C:\Temp\Video Alertas\what_queries_are_failing.xel' ,
-metadatafile = 'C:\Temp\Video Alertas\what_queries_are_failing.xem',
+(set filename = '/tmp/db/video_alertas/what_queries_are_failing.xel' ,
+metadatafile = '/tmp/db/video_alertas/what_queries_are_failing.xem',
 max_file_size = 500,
 max_rollover_files = 5)
 WITH (MAX_DISPATCH_LATENCY = 5SECONDS)

@@ -64,7 +64,7 @@ begin
 			@name = N'DBA_Operator',
 			@enabled = 1,
 			@pager_days = 0,
-			@email_address = N'EMail1@provedor.com'	-- To put more Emails: 'EMail1@provedor.com;EMail2@provedor.com'	
+			@email_address = N'mark@kram.vix.br'	-- To put more Emails: 'EMail1@provedor.com;EMail2@provedor.com'	
 
 end
 
@@ -80,7 +80,7 @@ begin
 			@name = N'DBA_Team_Operator',
 			@enabled = 1,
 			@pager_days = 0,
-			@email_address = N'DBATEAM@provedor.com'	-- To put more Emails: 'EMail1@provedor.com;EMail2@provedor.com'	
+			@email_address = N'mark@kram.vix.br'	-- To put more Emails: 'EMail1@provedor.com;EMail2@provedor.com'	
 
 end
 
@@ -90,11 +90,11 @@ end
 GO
 	CREATE DATABASE [Traces] 
 		ON  PRIMARY ( 
-			NAME = N'Traces', FILENAME = N'C:\...\Traces.mdf' , -- Alter to a real path
+			NAME = N'Traces', FILENAME = N'H:\Desenvolvimento\Dados\SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\Traces.mdf' , -- Alter to a real path
 			SIZE = 102400KB , FILEGROWTH = 102400KB 
 		)
 		LOG ON ( 
-			NAME = N'Traces_log', FILENAME = N'C:\...\Traces_log.ldf',  -- Alter to a real path
+			NAME = N'Traces_log', FILENAME = N'H:\Desenvolvimento\Dados\SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\Traces_log.ldf',  -- Alter to a real path
 			SIZE = 30720KB , FILEGROWTH = 30720KB 
 		)
 	GO
@@ -140,7 +140,7 @@ GO
 -- Also change the parameter @Profile for your Database Mail Profile.
 USE Traces
 
-exec stpConfiguration_Table 'Email1@provedor.com;Email2@provedor.com', @Profile, @Fl_Language --(1 - Portuguese | 0 -- English)
+exec stpConfiguration_Table 'db@kram.vix.br', 'default', 1 --(1 - Portuguese | 0 -- English)
 
 
 
@@ -295,6 +295,7 @@ SELECT * FROM dbo.Log_Whoisactive
 
 -- Run the checklist job to test
 EXEC msdb.dbo.sp_start_job N'DBA - CheckList SQL Server Instance';  
+
 
 
 

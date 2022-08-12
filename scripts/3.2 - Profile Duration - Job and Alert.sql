@@ -92,7 +92,7 @@ BEGIN
 	/*******************************************************************************************************************************
 	-- ATENTION!!! YOU NEED TO CHANGE THIS PATH
 	*******************************************************************************************************************************/
-	exec @rc = sp_trace_create @TraceID output, 0, N'C:\Temp\teste\Duration', @maxfilesize, NULL 
+	exec @rc = sp_trace_create @TraceID output, 0, N'/tmp/db/duration/trace', @maxfilesize, NULL 
 
 	if (@rc != 0) goto error
 
@@ -203,7 +203,7 @@ BEGIN
 	Select TextData,NTUserName, HostName, ApplicationName, LoginName, SPID, 
 	cast(Duration /1000/1000.00 as numeric(15,2)) Duration, StartTime,
 	EndTime, Reads,Writes, CPU, ServerName, DataBaseName, RowCounts/*, SessionLoginName*/
-	FROM :: fn_trace_gettable('C:\Temp\teste\Duration.trc', default)
+	FROM :: fn_trace_gettable('/tmp/db/duration/trace.trc', default)
 	where Duration is not null	
 		and TextData not like '%stpLoad_SQL_Counter%' --you can ignore some query here
 		and TextData not like '%stpAlert_Every_Minute%' --you can ignore some query here
@@ -270,7 +270,7 @@ BEGIN TRANSACTION
 
 			select @Traceid = traceid
 			from fn_trace_getinfo (null)
-			where cast(value as varchar(100)) like ''%Duration%''
+			where cast(value as varchar(100)) like ''%duration%''
 
 			if @Traceid is not null
 			begin
@@ -319,7 +319,9 @@ BEGIN TRANSACTION
 			@retry_interval = 0,
 			@os_run_priority = 0,
 			@subsystem=N'CmdExec',
-			@command = N'Del "C:\Temp\teste\Duration.trc" /Q',
+			--@command = N'Del "/tmp/db/duration/trace.trc" /Q',
+			@command = N'rm "/tmp/db/duration/trace.trc"',
+
 			@flags = 0
 
 	IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
